@@ -1,0 +1,167 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reality vs Illusion Game</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #000, #1a1a1a);
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    color: #00ffc3;
+    margin-top: 20px;
+}
+
+.container {
+    margin-top: 30px;
+}
+
+img {
+    width: 320px;
+    height: 320px;
+    border-radius: 20px;
+    border: 3px solid #00ffc3;
+    box-shadow: 0 0 20px #00ffc3;
+}
+
+button {
+    margin: 15px;
+    padding: 12px 25px;
+    border-radius: 12px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.real {
+    background: #4caf50;
+    color: white;
+}
+
+.illusion {
+    background: #ff4d4d;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.score {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.level {
+    margin-top: 5px;
+    color: #00ffc3;
+}
+
+#result {
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+#gameOver {
+    display: none;
+    margin-top: 30px;
+}
+
+.restart {
+    background: #00ffc3;
+    color: black;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>🧠 Reality vs Illusion</h1>
+
+<div class="score">Score: <span id="score">0</span></div>
+<div class="level">Level: <span id="level">1</span></div>
+
+<div class="container">
+    <img id="image" src="">
+</div>
+
+<div>
+    <button class="real" onclick="checkAnswer('real')">REAL</button>
+    <button class="illusion" onclick="checkAnswer('illusion')">ILLUSION</button>
+</div>
+
+<div id="result"></div>
+
+<div id="gameOver">
+    <h2>🎮 Game Over!</h2>
+    <button class="restart" onclick="restartGame()">Restart</button>
+</div>
+
+<script>
+
+// Image dataset
+const images = [
+    {src: "https://picsum.photos/300?random=1", type: "real"},
+    {src: "https://picsum.photos/300?random=2", type: "real"},
+    {src: "https://picsum.photos/300?random=3", type: "real"},
+    {src: "https://i.imgur.com/8Km9tLL.jpg", type: "illusion"},
+    {src: "https://i.imgur.com/Z6X9b9B.jpg", type: "illusion"},
+    {src: "https://i.imgur.com/qIufhof.png", type: "illusion"}
+];
+
+let score = 0;
+let level = 1;
+let current;
+
+function loadImage() {
+    current = images[Math.floor(Math.random() * images.length)];
+    document.getElementById("image").src = current.src;
+}
+
+function checkAnswer(choice) {
+    if (choice === current.type) {
+        score++;
+        level++;
+        document.getElementById("result").innerHTML = "✅ Correct!";
+    } else {
+        document.getElementById("result").innerHTML = "❌ Wrong!";
+        endGame();
+        return;
+    }
+
+    document.getElementById("score").innerText = score;
+    document.getElementById("level").innerText = level;
+
+    setTimeout(loadImage, 800);
+}
+
+function endGame() {
+    document.getElementById("gameOver").style.display = "block";
+}
+
+function restartGame() {
+    score = 0;
+    level = 1;
+    document.getElementById("score").innerText = score;
+    document.getElementById("level").innerText = level;
+    document.getElementById("gameOver").style.display = "none";
+    document.getElementById("result").innerHTML = "";
+    loadImage();
+}
+
+loadImage();
+
+</script>
+
+</body>
+</html>
+```
